@@ -12,6 +12,10 @@ BugLens turns inconsistent issue descriptions into concise, structured tickets f
 - CSV import (up to 100 reports / 2 MB), row validation, persistent batch metadata, sequential analysis, visible progress, and resume after navigation or a stopped run.
 - Responsive workspace navigation, loading/error/empty states, profile editing, report detail/edit screens, and severity/priority/status badges.
 
+## Live Demo
+
+https://buglens-ai-gwupqmof.manus.space/
+
 ## Architecture
 
 ```text
