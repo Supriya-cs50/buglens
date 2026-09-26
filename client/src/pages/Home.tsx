@@ -1,33 +1,72 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import { useAuth } from "@/_core/hooks/useAuth";
+import {
+  ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Bolt, Bug,
+  Check, ChevronRight, CircleDot, Clock3, FileStack, Layers3, LockKeyhole,
+  SearchCheck, ShieldCheck, Sparkles, WandSparkles,
+} from "lucide-react";
+import { useEffect } from "react";
+import { Link, useLocation } from "wouter";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
+const features = [
+  { icon: WandSparkles, color: "bg-violet-100 text-violet-700", title: "AI summaries, with signal", copy: "Turn long, uneven incident notes into crisp summaries and reproducible steps—without inventing details." },
+  { icon: SearchCheck, color: "bg-blue-100 text-blue-700", title: "Triage with context", copy: "Severity, priority, category and impact live beside the original report, so the whole story stays connected." },
+  { icon: Layers3, color: "bg-cyan-100 text-cyan-700", title: "Batch in one pass", copy: "Import a CSV, review progress, and come back to a saved batch as reports are analyzed." },
+  { icon: BarChart3, color: "bg-emerald-100 text-emerald-700", title: "See patterns sooner", copy: "Track trends by category, severity, priority and time to understand what keeps interrupting delivery." },
+];
+
 export default function Home() {
-  // The useAuth hook provides authentication state.
-  // To implement login/logout, call logout(), or start login from an event
-  // handler: onClick={() => startLogin()} (imported from "@/const"). Never call
-  // startLogin() during render (no href={startLogin()}) — it mints a one-time
-  // nonce cookie and must run only at the moment of navigation.
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const { user, loading } = useAuth();
+  const [, setLocation] = useLocation();
+  useEffect(() => { if (!loading && user) setLocation("/dashboard"); }, [loading, user, setLocation]);
 
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  return <div className="min-h-screen overflow-hidden bg-white text-slate-900">
+    <header className="relative z-10 mx-auto flex max-w-[1280px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
+      <Link href="/" className="flex items-center gap-2.5"><span className="grid h-9 w-9 place-items-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-700/20"><Bug className="h-[18px] w-[18px]" /></span><span className="text-lg font-bold tracking-tight">BugLens</span></Link>
+      <nav className="hidden items-center gap-8 text-sm font-medium text-slate-500 md:flex"><a href="#capabilities" className="hover:text-slate-900">Platform</a><a href="#workflow" className="hover:text-slate-900">How it works</a><a href="#security" className="hover:text-slate-900">Security</a></nav>
+      <div className="flex items-center gap-2"><Link href="/login" className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:text-slate-900 sm:block">Sign in</Link><Button asChild className="h-10 rounded-lg bg-indigo-600 px-4 text-sm font-semibold shadow-sm shadow-indigo-600/20 hover:bg-indigo-700"><Link href="/register">Get started <ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div>
+    </header>
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
+    <main>
+      <section className="relative mx-auto max-w-[1280px] px-5 pb-24 pt-12 sm:px-8 sm:pt-16 lg:px-12 lg:pb-32 lg:pt-20">
+        <div className="absolute left-[43%] top-0 h-[500px] w-[500px] rounded-full bg-indigo-100/60 blur-[100px]" />
+        <div className="relative grid items-center gap-16 lg:grid-cols-[0.91fr_1.09fr] lg:gap-12">
+          <div className="max-w-[560px]">
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-indigo-700"><span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" /><span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-600" /></span>AI-assisted engineering triage</div>
+            <h1 className="text-[clamp(2.8rem,5.7vw,5rem)] font-semibold leading-[0.99] tracking-[-0.055em] text-slate-950">Turn messy bug reports into <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">actionable tickets.</span></h1>
+            <p className="mt-7 max-w-[485px] text-[16px] leading-7 text-slate-500 sm:text-[17px]">AI-powered bug summarization and triage for faster software maintenance. Find the signal, understand impact, and move the right fix forward.</p>
+            <div className="mt-8 flex flex-wrap items-center gap-3"><Button asChild className="h-12 rounded-xl bg-indigo-600 px-5 text-sm font-semibold shadow-md shadow-indigo-600/20 transition-transform hover:-translate-y-0.5 hover:bg-indigo-700 active:translate-y-0"><Link href="/register">Start triaging <ArrowRight className="ml-2 h-4 w-4" /></Link></Button><Button asChild variant="outline" className="h-12 rounded-xl border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50"><Link href="/login">Sign in to workspace</Link></Button></div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-400"><span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-emerald-600" />Structured summaries</span><span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-emerald-600" />Private by account</span><span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-emerald-600" />Batch-ready</span></div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[610px] lg:mr-0">
+            <div className="absolute -right-4 -top-5 z-10 hidden rounded-xl border border-white/70 bg-white/90 p-3.5 shadow-xl shadow-slate-900/10 backdrop-blur sm:block"><div className="flex items-center gap-2.5"><div className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-50 text-emerald-600"><Sparkles className="h-4 w-4" /></div><div><p className="text-[10px] font-semibold text-slate-800">AI triage complete</p><p className="mt-0.5 text-[9px] text-slate-400">Structured in 4.2 seconds</p></div><Check className="ml-3 h-4 w-4 text-emerald-600" /></div></div>
+            <div className="rounded-[22px] border border-slate-200/80 bg-white p-2.5 shadow-[0_28px_90px_-25px_rgba(34,43,82,0.24)] sm:p-3.5">
+              <div className="overflow-hidden rounded-[15px] border border-slate-100 bg-[#f7f8fc]">
+                <div className="flex h-12 items-center justify-between border-b border-slate-200/80 bg-white px-4"><div className="flex items-center gap-2"><span className="grid h-6 w-6 place-items-center rounded-md bg-indigo-600 text-white"><Bug className="h-3 w-3" /></span><span className="text-[11px] font-bold text-slate-800">BugLens</span><span className="mx-1 h-3.5 w-px bg-slate-200" /><span className="text-[9px] text-slate-400">Engineering workspace</span></div><div className="flex gap-1"><span className="h-2 w-2 rounded-full bg-slate-200" /><span className="h-2 w-2 rounded-full bg-slate-200" /><span className="h-2 w-2 rounded-full bg-slate-200" /></div></div>
+                <div className="grid grid-cols-[128px_1fr] sm:grid-cols-[154px_1fr]">
+                  <aside className="border-r border-slate-200/80 bg-white p-2.5 sm:p-3"><p className="mb-2 px-2 text-[8px] font-semibold uppercase tracking-wider text-slate-400">Workspace</p>{[["Overview",BarChart3], ["Bug reports",Bug], ["New report",CircleDot], ["Batch",FileStack]].map(([name, Icon], index) => { const Ico = Icon as typeof Bug; return <div key={name as string} className={`mb-1 flex h-7 items-center gap-2 rounded-md px-2 text-[9px] font-medium ${index === 0 ? "bg-indigo-50 text-indigo-700" : "text-slate-500"}`}><Ico className="h-3 w-3" />{name as string}</div>; })}<div className="mt-6 rounded-lg border border-indigo-100 bg-indigo-50/70 p-2"><Bolt className="mb-1 h-3 w-3 text-indigo-600" /><p className="text-[8px] font-semibold text-slate-700">AI is on call</p><p className="mt-1 text-[7px] leading-3 text-slate-500">Clearer context, faster fixes.</p></div></aside>
+                  <div className="min-w-0 p-3 sm:p-4"><div className="mb-3 flex items-center justify-between"><div><p className="text-[8px] text-slate-400">Illustrative preview · sample data</p><h3 className="mt-1 text-[14px] font-semibold tracking-tight text-slate-900 sm:text-base">Good morning, team</h3></div><div className="grid h-7 w-7 place-items-center rounded-full bg-indigo-100 text-[9px] font-bold text-indigo-700">JL</div></div>
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2"><div className="rounded-lg border border-slate-200/80 bg-white p-2 sm:p-2.5"><p className="text-[7px] text-slate-400 sm:text-[8px]">Total reports</p><p className="mt-1 text-base font-semibold text-slate-900 sm:text-lg">128</p><p className="mt-1 flex items-center gap-1 text-[7px] text-emerald-600"><ArrowUpRight className="h-2.5 w-2.5" />12% this week</p></div><div className="rounded-lg border border-slate-200/80 bg-white p-2 sm:p-2.5"><p className="text-[7px] text-slate-400 sm:text-[8px]">AI analyzed</p><p className="mt-1 text-base font-semibold text-slate-900 sm:text-lg">96</p><p className="mt-1 text-[7px] text-slate-400">75% completion</p></div><div className="rounded-lg border border-slate-200/80 bg-white p-2 sm:p-2.5"><p className="text-[7px] text-slate-400 sm:text-[8px]">High severity</p><p className="mt-1 text-base font-semibold text-rose-600 sm:text-lg">08</p><p className="mt-1 text-[7px] text-slate-400">Needs attention</p></div></div>
+                    <div className="mt-2 grid gap-2 sm:grid-cols-[1.25fr_0.75fr]"><div className="rounded-lg border border-slate-200/80 bg-white p-2.5 sm:p-3"><div className="mb-3 flex items-center justify-between"><div><p className="text-[9px] font-semibold text-slate-800">Reports over time</p><p className="mt-0.5 text-[7px] text-slate-400">Last 14 days</p></div><div className="rounded border border-slate-100 px-1.5 py-1 text-[7px] text-slate-500">14 days⌄</div></div><div className="flex h-[77px] items-end gap-[3px] border-b border-l border-slate-100 px-1 sm:h-[94px]">{[26,31,29,40,35,51,46,39,60,49,70,56,82,67,74,92,69,77,60,88,72,96,79,86,70,98,77,88].map((height,index)=><div key={index} className={`flex-1 rounded-t-[2px] ${index>22?"bg-indigo-500":"bg-indigo-200"}`} style={{height:`${height}%`}} />)}</div><div className="mt-1 flex justify-between text-[7px] text-slate-400"><span>Sep 30</span><span>Oct 06</span><span>Oct 13</span></div></div>
+                      <div className="rounded-lg border border-slate-200/80 bg-white p-2.5 sm:p-3"><p className="text-[9px] font-semibold text-slate-800">Severity mix</p><p className="mt-0.5 text-[7px] text-slate-400">Across analyzed reports</p><div className="mx-auto my-3 flex h-[72px] w-[72px] items-center justify-center rounded-full" style={{background:"conic-gradient(#ef4444 0deg 53deg, #f59e0b 53deg 168deg, #6366f1 168deg 277deg, #94a3b8 277deg 360deg)"}}><div className="grid h-[49px] w-[49px] place-items-center rounded-full bg-white text-center"><div><p className="text-[11px] font-bold text-slate-800">96</p><p className="text-[6px] text-slate-400">tickets</p></div></div></div><div className="space-y-1">{[["Critical","#ef4444","14%"],["High","#f59e0b","32%"],["Medium","#6366f1","30%"],["Low","#94a3b8","24%"]].map(([name,color,value])=><div key={name} className="flex items-center justify-between text-[7px] text-slate-500"><span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full" style={{background:color}}/>{name}</span><span>{value}</span></div>)}</div></div></div>
+                    <div className="mt-2 rounded-lg border border-slate-200/80 bg-white p-2.5 sm:p-3"><div className="mb-2 flex items-center justify-between"><p className="text-[9px] font-semibold text-slate-800">Recent reports</p><span className="text-[8px] font-semibold text-indigo-600">View all →</span></div>{[["Checkout hangs after payment", "PAYMENT", "CRITICAL", "4m ago"],["Password reset link expires early", "AUTH", "HIGH", "26m ago"],["Search filters reset on refresh", "UI / UX", "MEDIUM", "1h ago"]].map(([name,cat,sev,time])=><div key={name} className="flex items-center gap-2 border-t border-slate-50 py-2"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${sev === "CRITICAL" ? "bg-rose-500" : sev === "HIGH" ? "bg-amber-500" : "bg-indigo-500"}`} /><p className="min-w-0 flex-1 truncate text-[8px] font-medium text-slate-700">{name}</p><span className="hidden rounded bg-slate-50 px-1.5 py-0.5 text-[7px] text-slate-400 sm:block">{cat}</span><span className="rounded bg-rose-50 px-1.5 py-0.5 text-[7px] font-medium text-rose-600">{sev}</span><span className="hidden w-12 text-right text-[7px] text-slate-400 sm:block">{time}</span></div>)}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-5 -left-5 hidden items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 shadow-xl shadow-slate-900/10 sm:flex"><div className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-50 text-emerald-600"><ShieldCheck className="h-[18px] w-[18px]" /></div><div><p className="text-[10px] font-semibold text-slate-800">Private by design</p><p className="mt-1 text-[9px] text-slate-400">Reports belong to your account</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities" className="border-y border-slate-100 bg-[#f8f9fc] px-5 py-20 sm:px-8 lg:px-12 lg:py-24"><div className="mx-auto max-w-[1160px]"><div className="max-w-[550px]"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-700">Less rereading, better triage</p><h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-[40px]">Your reports have a story. Bring it into focus.</h2><p className="mt-4 text-sm leading-6 text-slate-500">BugLens keeps the original issue intact while making the details easier to scan, share and act on.</p></div><div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{features.map(({icon:Icon,color,title,copy})=><article key={title} className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-900/[0.06]"><div className={`mb-5 grid h-10 w-10 place-items-center rounded-xl ${color}`}><Icon className="h-[19px] w-[19px]" /></div><h3 className="text-sm font-semibold text-slate-900">{title}</h3><p className="mt-2 text-xs leading-5 text-slate-500">{copy}</p></article>)}</div></div></section>
+
+      <section id="workflow" className="px-5 py-20 sm:px-8 lg:px-12 lg:py-24"><div className="mx-auto grid max-w-[1160px] items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]"><div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-700">A clear path from report to resolution</p><h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-[40px]">Keep the human story. Add the structure.</h2><p className="mt-4 text-sm leading-6 text-slate-500">Every AI suggestion stays alongside its original report. Review it, rerun analysis when details change, and search your saved history when patterns emerge.</p><Link href="/register" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 hover:text-indigo-800">Explore your workspace <ArrowRight className="h-4 w-4" /></Link></div><div className="grid gap-3 sm:grid-cols-3">{[["01","Capture","Record the report and environment as received."],["02","Structure","Extract severity, impact and reproducible steps."],["03","Prioritize","Track trends and decide what deserves attention." ]].map(([number,title,copy],index)=><div key={number} className="relative rounded-2xl border border-slate-200 bg-white p-5"><span className="font-mono text-xs font-semibold text-indigo-600">{number}</span><div className="my-5 flex items-center"><div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-indigo-700">{index===0?<Bug className="h-5 w-5"/>:index===1?<WandSparkles className="h-5 w-5"/>:<BarChart3 className="h-5 w-5"/>}</div>{index<2&&<div className="ml-3 hidden h-px flex-1 bg-slate-200 sm:block"><ArrowRight className="relative -right-[calc(100%-7px)] -top-[7px] h-3 w-3 text-slate-300"/></div>}</div><h3 className="text-sm font-semibold text-slate-900">{title}</h3><p className="mt-2 text-xs leading-5 text-slate-500">{copy}</p></div>)}</div></div></section>
+
+      <section id="security" className="px-5 pb-20 sm:px-8 lg:px-12 lg:pb-24"><div className="mx-auto flex max-w-[1160px] flex-col gap-7 rounded-[24px] bg-[#10142a] bg-cover bg-center px-7 py-9 text-white sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14" style={{backgroundImage:"linear-gradient(90deg, rgba(16,20,42,.96) 0%, rgba(16,20,42,.91) 60%, rgba(16,20,42,.78) 100%), url(\"/manus-storage/buglens-abstract-network_761bafe5.jpg\")"}}><div className="max-w-[560px]"><div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-indigo-200"><LockKeyhole className="h-3.5 w-3.5"/>Built for real engineering workflows</div><h2 className="text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">Your reports stay yours.</h2><p className="mt-3 text-sm leading-6 text-slate-300">Protected accounts, private report ownership, server-only AI access, and role-aware administration help keep triage orderly.</p></div><Button asChild className="h-12 shrink-0 rounded-xl bg-white px-5 font-semibold text-slate-900 hover:bg-slate-100"><Link href="/register">Create a workspace <ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div></section>
+    </main>
+
+    <footer className="border-t border-slate-100 px-5 py-6 sm:px-8 lg:px-12"><div className="mx-auto flex max-w-[1160px] flex-col items-center justify-between gap-3 sm:flex-row"><Link href="/" className="flex items-center gap-2 text-xs font-semibold text-slate-600"><Bug className="h-4 w-4 text-indigo-600"/>BugLens</Link><p className="text-[11px] text-slate-400">A clearer view into what’s breaking. © 2026 BugLens</p><div className="flex gap-4 text-[11px] text-slate-400"><Link href="/login" className="hover:text-slate-700">Sign in</Link><Link href="/register" className="hover:text-slate-700">Get started</Link></div></div></footer>
+  </div>;
 }
