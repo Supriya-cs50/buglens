@@ -145,16 +145,42 @@ Required headers: `title,description`; optional: `environment`. Maximums: 100 re
 
 The project uses the managed database and built-in LLM proxy configured by the hosting runtime. No browser-side AI key or customer-provided secret is needed for the managed preview.
 
-### Standalone/local environment
+###Local Development
 
-The managed host supplies `DATABASE_URL`, `JWT_SECRET`, and the private built-in LLM proxy credentials through its protected environment. For a standalone deployment, provision `DATABASE_URL` and a high-entropy `JWT_SECRET` in your hosting provider’s secret manager, plus a server-side OpenAI-compatible LLM adapter and API credential. Do not commit `.env` files or expose AI keys through `VITE_*` variables.
+#### Prerequisites
 
-```bash
+- Node.js 20+
+- pnpm
+- MySQL/TiDB database
+- OpenAI-compatible LLM API access
+
+#### 1. Clone the repository
+
+git clone https://github.com/YOUR_USERNAME/buglens.git
+cd buglens
+
+#### 2. Install dependencies
+
 pnpm install
+
+#### 3. Configure environment variables
+
+Create a `.env` file:
+
+DATABASE_URL="your_database_url"
+JWT_SECRET="your_random_secret"
+LLM_API_KEY="your_api_key"
+LLM_BASE_URL="your_provider_endpoint"
+
+#### 4. Setup the database
+
 pnpm drizzle-kit generate
-# Apply the generated SQL using the configured database/migration runner.
+
+## Apply migrations using the configured database
+
+#### 5. Start the application
+
 pnpm dev
-```
 
 `DATABASE_URL` must point to a MySQL/TiDB database for this Drizzle schema. The selected LLM model is `gpt-5-mini`; the server calls the managed OpenAI-compatible proxy helper. For a non-managed deployment, implement/maintain a server-side provider adapter and set its private endpoint/key in the hosting environment; do not put credentials in variables prefixed with `VITE_`.
 
