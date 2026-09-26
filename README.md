@@ -145,7 +145,7 @@ Required headers: `title,description`; optional: `environment`. Maximums: 100 re
 
 The project uses the managed database and built-in LLM proxy configured by the hosting runtime. No browser-side AI key or customer-provided secret is needed for the managed preview.
 
-###Local Development
+### Local Development
 
 #### Prerequisites
 
