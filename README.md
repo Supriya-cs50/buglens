@@ -156,7 +156,7 @@ The project uses the managed database and built-in LLM proxy configured by the h
 
 #### 1. Clone the repository
 
-git clone https://github.com/YOUR_USERNAME/buglens.git
+git clone https://github.com/Supriya-cs50/buglens.git
 cd buglens
 
 #### 2. Install dependencies
